@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1 class="text-center">Altitude Sickness!</h1>
+  <div class="text-center mt-4">
+    <img src="{{ url_for('static', filename='images/altitudephoto.jpeg') }}"
+         alt="Altitude Photo"
+         class="img-fluid rounded"
+         style="max-width: 500px;">
+  </div>
+  <div class="homepage-container">
+        <p>Boone Raggae Rock. Inspired by bands like Red Hot Chili Peppers and Sublime. The group consists of four Appalachian State students with a love of playing for the people.</p>
+  </div>
+</div>
+
+<div style="display: flex; gap: 20px; justify-content: center; margin-top: 1rem;">
+  <div class="social-dropdown">
+    <button onclick="toggleSocials('follow-list')" class="social-button">Follow Us</button>
+    <div id="follow-list" class="social-list hidden">
+      <div class="social-icon">
+        <a href="https://www.instagram.com/altitudesicknessband/" target="_blank">
+          <img src="{{ url_for('static', filename='images/instagram.jpeg') }}" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="social-dropdown">
+    <button onclick="toggleSocials('book-list')" class="social-button">Book Us</button>
+    <div id="book-list" class="social-list hidden">
+      <div class="social-icon">
+        <a href="https://www.instagram.com/altitudesicknessband/" target="_blank">
+          <img src="{{ url_for('static', filename='images/instagram.jpeg') }}" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="social-dropdown">
+    <button onclick="toggleSocials('shows-list')" class="social-button">Come See Us</button>
+    <div id="shows-list" class="social-list hidden" style="text-align: left; padding: 10px;">
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li><strong>Aug 30, 2025</strong> – Elevation Brewing</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleSocials(id) {
+    const list = document.getElementById(id);
+    if (list.classList.contains('hidden')) {
+      list.classList.remove('hidden');
+    } else {
+      list.classList.add('hidden');
+    }
+  }
+</script>
+{% endblock %}

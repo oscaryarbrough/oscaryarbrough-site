@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1 class="text-center">Drum Lessons with Oscar</h1>
+  <div class="homepage-container">
+    <img src="{{ url_for('static', filename='images/jackeddrum.jpeg') }}"
+         alt="Jacked Drum"
+         class="homepage-photo"
+         style="max-width: 450px;">
+   <div class="homepage-bio" style="flex-grow: 1; max-width: 750px;">
+      <p>Music is about having fun and connecting with people. I believe that everyone has music inside of them and craves to be able to say something with that voice. In my lessons I prioritize having fun (with structure), building a solid foundation, and a holistic understanding of the fundamentals. However, every student is different and I love to make adjustments depending on my student’s needs and what they want to say with their musical voice.</p>
+
+      <p>Throughout my life, I have been lucky enough to study with some incredible drummers such as: Matt Gartska, Xavier Ware, Thomas Pridgen, Willie Howell, Alex Cohen, Al Sergel, and Jason Singleton. I also studied traditional West African drumming in Ghana during the summer in 2025.</p>
+
+      <p>Currently living in Boone North Carolina, I teach lessons in-person.</p>
+      
+    </div>
+  </div>
+  <!-- social_links.html -->
+<div class="social-dropdown">
+  <button onclick="toggleSocials('social-list')" class="social-button">Schedule a Lesson</button>
+  <div id="social-list" class="social-list hidden">
+    <div style="margin-top: 1rem; text-align: center;">
+      <a href="https://instagram.com/oscaryarbrough" target="_blank">
+        <img src="{{ url_for('static', filename='images/instagram.jpeg') }}" alt="Instagram" style="height: 50px; margin: 0 10px;">
+      </a>
+      <a href="mailto:oscaryarbrough1@gmail.com">
+        <img src="{{ url_for('static', filename='images/email.png') }}" alt="Email" style="height: 50px; margin: 0 10px;">
+      </a>
+      <a href="sms:+17044921780">
+        <img src="{{ url_for('static', filename='images/call.png') }}" alt="Text Me" style="height: 50px; margin: 0 10px;">
+      </a>
+      <p style="font-size: 0.9em; margin-top: 0.5rem;">Contacting me any of these ways works!</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

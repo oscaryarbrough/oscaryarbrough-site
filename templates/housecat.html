@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+  <h1 class="text-center">Housecat!</h1>
+  <div class="text-center mt-4">
+    <img src="{{ url_for('static', filename='images/housecatphoto.jpeg') }}"
+         alt="Housecat Photo"
+         class="img-fluid rounded"
+         style="max-width: 300px;">
+  </div>
+  <div class="homepage-container">
+        <p>Housecat! is an indie jazz-rock band based in North Carolina, blending moody melodies with hard-hitting, hip-hop-inspired grooves. Fronted by singer-songwriter Jake Hodges, the band formed in 2024 and has since built a reputation for energetic live shows across Boone, Charlotte, and intimate house venues. With a growing catalog of singles available on all streaming platforms, Housecat! continues to craft a unique sound that bridges jazz, rock, and modern rhythms.</p>
+  </div>
+</div>
+<div style="display: flex; gap: 20px; justify-content: center; margin-top: 1rem;">
+  <div class="social-dropdown">
+    <button onclick="toggleSocials('follow-list')" class="social-button">Follow Us</button>
+    <div id="follow-list" class="social-list hidden">
+      <div class="social-icon">
+        <a href="https://instagram.com/housecat.theband" target="_blank">
+          <img src="{{ url_for('static', filename='images/instagram.jpeg') }}" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="social-dropdown">
+    <button onclick="toggleSocials('stream-list')" class="social-button">Stream Us</button>
+    <div id="stream-list" class="social-list hidden">
+      <div class="social-icon">
+        <a href="https://open.spotify.com/artist/6Ge8kBPmNyocFTBjaVbXPQ" target="_blank">
+          <img src="{{ url_for('static', filename='images/spotify.png') }}" alt="Spotify">
+        </a>
+      </div>
+      <div class="social-icon">
+        <a href="https://music.apple.com/us/artist/housecat/1808476665" target="_blank">
+          <img src="{{ url_for('static', filename='images/applemusic.jpeg') }}" alt="Apple Music">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="social-dropdown">
+    <button onclick="toggleSocials('book-list')" class="social-button">Book Us</button>
+    <div id="book-list" class="social-list hidden">
+      <div class="social-icon">
+        <a href="https://instagram.com/housecat.theband" target="_blank">
+          <img src="{{ url_for('static', filename='images/instagram.jpeg') }}" alt="Instagram">
+        </a>
+      </div>
+      <div class="social-icon">
+        <a href="mailto:booking.housecats@gmail.com">
+          <img src="{{ url_for('static', filename='images/email.png') }}" alt="Email">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="social-dropdown">
+  <button onclick="toggleSocials('shows-list')" class="social-button">Come See Us</button>
+  <div id="shows-list" class="social-list hidden" style="text-align: left; padding: 10px;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li><strong>Aug 16, 2025</strong> – Tapp Room, Boone, NC</li>
+      <li><strong>Aug 22, 2025</strong> – Evening Muse, Charlotte, NC</li>
+      <li><strong>October 31, 2025</strong> – Betsys Barn, Todd, NC</li>
+    </ul>
+  </div>
+</div>
+</div>
+<script>
+  function toggleSocials(id) {
+    const list = document.getElementById(id);
+    if (list.classList.contains('hidden')) {
+      list.classList.remove('hidden');
+    } else {
+      list.classList.add('hidden');
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* ========== Base Styles ========== */
+body {
+  background-color: #e8b265;
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ========== Site Title ========== */
+#site-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  margin-right: auto;
+  transition: color 0.2s, transform 0.2s;
+}
+
+#site-title:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Responsive title for small screens */
+@media screen and (max-width: 640px) {
+  #site-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* ========== Navigation Bar ========== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-size: 2rem;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.nav-link:hover {
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* Responsive nav layout */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .nav-links {
+    margin-top: 0.5rem;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0;
+  }
+}
+
+/* ========== Homepage Layout ========== */
+.homepage-intro {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.homepage-intro h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.homepage-intro p {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.homepage-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2rem; /* space between image and text */
+  flex-wrap: wrap; /* makes layout responsive */
+  padding: 2rem;
+}
+
+.homepage-photo {
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.homepage-bio {
+  max-width: 600px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* ========== Social Media Dropdown ========== */
+.social-dropdown {
+  position: relative;
+  margin-top: 2rem; /* space above the button */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-button {
+  font-size: 1.5rem;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.social-list {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.social-list img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s;
+}
+
+.social-list img:hover {
+  transform: scale(1.2);
+}
+
+/* Dropdown toggle and animation */
+.hidden {
+  display: none;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

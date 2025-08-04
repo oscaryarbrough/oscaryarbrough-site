@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1 class="text-center">Drum Instructor & Performing Artist</h1>
+  <p class="text-center">Book a Lesson, Hire My Band</p>
+  <div class="text-center mt-4">
+    <img src="{{ url_for('static', filename='images/nicolesolo.jpeg') }}"
+     alt="Nicole Solo"
+     class="homepage-photo">
+  </div>
+  <div class="homepage-container">
+    <p>With 12 years of playing drums under my belt, I have worked with many students, played in multiple bands, and explored many aspects of the music industry such as: live sound, venue booking, and music production. I am a music student at Appalachian State University with a focus in percussion and economics. </p>
+  </div>
+</div>
+ <!-- social_links.html -->
+<div class="social-dropdown">
+  <button onclick="toggleSocials()" class="social-button">Connect with me</button>
+  <div id="social-list" class="social-list hidden">
+    <div class="social-icon">
+      <a href="https://instagram.com/oscaryarbrough" target="_blank">
+        <img src="{{ url_for('static', filename='images/instagram.jpeg') }}" alt="Instagram">
+      </a>
+    </div>
+    <div class="social-icon">
+      <a href="https://www.youtube.com/@OzzyShizzleDrums" target="_blank">
+        <img src="{{ url_for('static', filename='images/youtube.png') }}" alt="YouTube">
+      </a>
+    </div>
+    <div class="social-icon">
+      <a href="https://www.linkedin.com/in/oscar-yarbrough-0a2732253/" target="_blank">
+        <img src="{{ url_for('static', filename='images/linkedin.png') }}" alt="LinkedIn">
+      </a>
+    </div>
+        <div class="social-icon">
+      <a href="mailto:oscaryarbrough1@gmail.com" target="_blank">
+        <img src="{{ url_for('static', filename='images/email.png') }}" alt="Email">
+              </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
