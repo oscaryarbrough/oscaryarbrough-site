@@ -36,11 +36,24 @@
 </script>
 <body class="d-flex flex-column min-vh-100"></body>
   </header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light custom-navbar">
       <div class="container">
+        <!-- Desktop: image to the left of site title -->
+        <a href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='images/ghanahead.png') }}" 
+               alt="Headshot" 
+               class="navbar-headshot d-none d-lg-inline me-2">
+        </a>
+
+        <!-- Mobile: image above site title -->
+        <a href="{{ url_for('home') }}">
+          <img src="{{ url_for('static', filename='images/ghanahead.png') }}" 
+               alt="Headshot" 
+               class="navbar-headshot d-inline d-lg-none mx-auto mb-2">
+        </a>
         <a id="site-title" class="navbar-brand" href="{{ url_for('home') }}">Oscar Yarbrough</a>
         <div class="navbar-nav">
-          <a class="nav-link" href="{{ url_for('lessons') }}">Lessons</a>
+          <a class="nav-link" href="{{ url_for('lessons') }}">Drum Lessons</a>
           <a class="nav-link" href="{{ url_for('housecat') }}">Housecat!</a>
           <a class="nav-link" href="{{ url_for('altitude_sickness') }}">Altitude Sickness</a>
         </div>

@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap');
 
 /* ========== Base Styles ========== */
 body {
-  background-color: #e8b265;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
   font-size: 2rem;
@@ -10,8 +11,12 @@ body {
 }
 
 /* ========== Site Title ========== */
+/* Use Rajdhani font for navbar, nav-link, and site-title */
+.navbar, .nav-link, #site-title {
+  font-family: 'Rajdhani', sans-serif;
+}
 #site-title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: bold;
   text-decoration: none;
   color: #333;
@@ -27,7 +32,7 @@ body {
 /* Responsive title for small screens */
 @media screen and (max-width: 640px) {
   #site-title {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -147,6 +152,13 @@ body {
 .social-list img:hover {
   transform: scale(1.2);
 }
+.social-button {
+  transition: transform 0.2s ease;
+}
+
+.social-button:hover {
+  transform: scale(1.1);
+}
 
 /* Dropdown toggle and animation */
 .hidden {
@@ -166,4 +178,45 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+.bio-text {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .bio-text {
+    font-size: 1.0rem;
+  }
+
+  .custom-navbar {
+    padding-top: 0.40rem;
+    padding-bottom: 0.40rem;
+  }
+
+  .custom-navbar .navbar-brand {
+    font-size: 1.8rem;
+  }
+
+  .custom-navbar .nav-link {
+    font-size: 1.1rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .navbar-headshot {
+    max-height: 30px;
+    margin-left: 20rem;
+  }
+}
+
+
+
+/* ========== Navbar Headshot ========== */
+.navbar-headshot {
+  max-height: 75px;
+  height: auto;
+  vertical-align: middle;
+}
+.navbar-headshot:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
 }
