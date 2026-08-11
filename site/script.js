@@ -4,7 +4,7 @@
    trimmed for round 5:
      1. A live age counter, 9 decimal places, set inline in a sentence.
      2. A portrait whose photo pixelates from a range slider. Starts
-        fully pixelated (100); the slider brings it into focus.
+        in focus (0); the slider pixelates it.
      3. The Travel page world map: visited countries open a panel.
    Everything below degrades gracefully: with JS off, the page still reads,
    the portrait is just a picture, and the map panels are plain sections.
@@ -80,7 +80,7 @@
   // drawImage only — no getImageData/toDataURL, so file:// stays untainted.
   // clearRect before each draw keeps any alpha channel intact.
   //
-  // Round-10: three photos you can flip between; the slider starts at 85
+  // Round-18: the portrait starts in focus (0); sliding right pixelates it
   // and the pixelation level survives switching photos.
 
   function initPortrait() {
@@ -176,7 +176,7 @@
       controls.hidden = false;
       canvasActive = true;
 
-      sizeAndDraw(); // initial render honours the slider's value="85"
+      sizeAndDraw(); // initial render honours the slider's value="0"
 
       slider.addEventListener('input', function () {
         draw(Number(slider.value));

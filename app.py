@@ -6,9 +6,10 @@ app = Flask(__name__, static_folder=None)
 
 SITE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site")
 
-PAGES = {"experience", "studies", "music", "other"}
+PAGES = {"experience", "studies", "music", "other",
+         "secret", "secret-1", "secret-2", "secret-4"}
 
-FILES = {"style.css", "script.js", "game.js", "game.css"}
+FILES = {"style.css", "script.js", "game.js", "game.css", "portal.js"}
 
 # Old-site URLs that may still be linked or bookmarked elsewhere.
 LEGACY = {
