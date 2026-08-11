@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Secret Stuff — Oscar Yarbrough</title>
+<meta name="description" content="Oscar's super secret page: The Rhythm Section — a drum kit made of code — and other silly projects.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead column">
+  <div class="masthead__brand">
+    <a class="masthead__head" href="index.html" aria-label="Home">
+      <img src="/_shared/img/head.png" alt="" width="660" height="800">
+    </a>
+    <a class="masthead__name" href="index.html">Oscar Yarbrough</a>
+  </div>
+  <nav class="nav" aria-label="Primary">
+    <ul>
+      <li><a href="index.html">About</a></li>
+      <li><a href="experience.html">Experience</a></li>
+      <li><a href="studies.html">Studies</a></li>
+      <li><a href="music.html">Music</a></li>
+      <li><a href="travel.html">Travel</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main" class="column">
+
+  <div class="page-head">
+    <p class="eyebrow">Super Secret Stuff</p>
+    <h1>Super Secret Stuff</h1>
+    <p class="standfirst">Congratulations, you found my super secret page. This contains a bunch of my silly projects and random info.</p>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <h2 class="section-label">The Rhythm Section</h2>
+
+  <p>A drum kit made of code.</p>
+
+  <noscript>
+    <p><strong>The kit needs JavaScript, and yours is off.</strong> A perfectly reasonable choice, but the lanes stay silent. The rest of the page still reads fine, and the nearest table edge remains a fully acoustic instrument.</p>
+  </noscript>
+
+  <section aria-label="The Rhythm Section — a drum rhythm game">
+
+    <div class="drumgame" data-drumgame hidden>
+      <div class="drumgame__hud">
+        <p class="drumgame__stat"><span class="label">Score</span> <span class="drumgame__num" data-score>0</span></p>
+        <p class="drumgame__stat"><span class="label">Combo</span> <span class="drumgame__num" data-combo>0</span></p>
+        <p class="drumgame__stat"><span class="label">Level</span> <span class="drumgame__num" data-level>&mdash;</span></p>
+        <p class="drumgame__stat drumgame__stat--best"><span class="label">Best</span> <span class="drumgame__num" data-best>&mdash;</span></p>
+      </div>
+      <div class="drumgame__meter" aria-hidden="true"><div class="drumgame__meter-fill" data-meter></div></div>
+      <div class="drumgame__stage" data-stage>
+        <canvas data-drum-canvas width="672" height="417" aria-label="Drum game stage. Four lanes on the keys D, F, J and K, or tap the lanes directly."></canvas>
+        <div class="drumgame__overlay" data-overlay></div>
+      </div>
+      <div class="drumgame__bar" data-bar hidden></div>
+      <div class="drumgame__keys" aria-hidden="true">
+        <span>D &middot; kick</span><span>F &middot; snare</span><span>J &middot; hi-hat</span><span>K &middot; crash</span>
+      </div>
+      <p class="visually-hidden" role="status" data-live></p>
+      <p class="colophon">Keys D F J K, or tap the lanes. P pauses. Your best set is kept in this browser and nowhere else.</p>
+    </div>
+
+    <p data-unsupported hidden>This browser will not start the audio engine, so the kit stays quiet. Everything else on the page still works.</p>
+
+  </section>
+
+  <div class="head-egg">
+    <a href="index.html" aria-label="Back to the start">
+      <img src="/_shared/img/head.png" alt="" width="660" height="800">
+    </a>
+    <p class="colophon">He spins if you ask nicely. That is all he does, for now.</p>
+  </div>
+
+  <p class="cta">Say hello: <a href="mailto:oscaryarbrough1@gmail.com">oscaryarbrough1@gmail.com</a>.</p>
+
+</main>
+
+<footer class="site-footer column">
+  <ul class="social">
+    <li>
+      <a href="https://instagram.com/oscaryarbrough" rel="me noopener" target="_blank">
+        <svg class="social__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg>
+        <span>Instagram</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.youtube.com/@OzzyShizzle" rel="me noopener" target="_blank">
+        <svg class="social__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10.2 9.3l4.9 2.7-4.9 2.7z" fill="currentColor" stroke="none"/></svg>
+        <span>YouTube</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/oscaryarbrough/" rel="me noopener" target="_blank">
+        <svg class="social__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="8" y1="10.8" x2="8" y2="16.6"/><circle cx="8" cy="7.6" r="0.55" fill="currentColor"/><path d="M11.6 16.6v-5.8"/><path d="M11.6 13.5c0-1.4 1.05-2.5 2.4-2.5 1.45 0 2.4 1.05 2.4 2.6v3"/></svg>
+        <span>LinkedIn</span>
+      </a>
+    </li>
+    <li>
+      <a href="mailto:oscaryarbrough1@gmail.com">
+        <svg class="social__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.6 6.6L12 13l8.4-6.4"/></svg>
+        <span>Email</span>
+      </a>
+    </li>
+  </ul>
+</footer>
+
+<script src="script.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

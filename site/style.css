@@ -1,0 +1,883 @@
+/* ==========================================================================
+   Oscar Yarbrough — Variation 11: "Editorial"
+   The straight evolution of variation 2 ("Constrained Editorial Column"),
+   via variations 4, 7, 8, and 10.
+   Typography-led. One column. No cards, no shadows, no rounded corners.
+   Round-2 additions: masthead head, school logos, inline SVG social row.
+   ========================================================================== */
+
+/* --- Design tokens ------------------------------------------------------ */
+:root {
+  --bg:            #faf8f4;   /* warm off-white */
+  --bg-inset:      #f3efe7;   /* faintly deeper cream for quiet blocks */
+  --ink:           #1b1917;   /* near-black, warm */
+  --ink-soft:      #5a544c;   /* secondary prose / captions */
+  --ink-faint:     #8a8279;   /* labels, metadata */
+  --rule:          #ded7ca;   /* hairlines */
+  --rule-strong:   #c6bdac;
+  --accent:        #8c3b1e;   /* the one accent: burnt sienna */
+  --accent-soft:   rgba(140, 59, 30, 0.14);
+
+  --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua',
+           'Times New Roman', serif;
+  --sans:  ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+           Arial, sans-serif;
+  --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono',
+           monospace;
+
+  --measure: 42rem;           /* ~672px reading column */
+  --gutter: 1.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #17150f;   /* warm dark, not pure black */
+    --bg-inset:    #1f1c15;
+    --ink:         #ece5d8;
+    --ink-soft:    #b3aa99;
+    --ink-faint:   #8b8272;
+    --rule:        #38332a;
+    --rule-strong: #4c453a;
+    --accent:      #d98f62;
+    --accent-soft: rgba(217, 143, 98, 0.18);
+  }
+}
+
+/* --- Base --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* [hidden] must beat any display rule below (e.g. .portrait__stage img). */
+[hidden] { display: none !important; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;       /* 17px */
+  line-height: 1.72;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  padding: 0 var(--gutter);
+}
+
+@media (min-width: 40em) {
+  body { font-size: 1.125rem; }   /* 18px on larger screens */
+}
+
+/* The column. Centred on the page; text left-aligned inside it. */
+.column {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* --- Skip link ---------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--bg);
+  color: var(--accent);
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--accent);
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  z-index: 10;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* --- Focus visibility --------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* --- Masthead / navigation --------------------------------------------- */
+.masthead {
+  padding: 3rem 0 0;
+}
+
+/* The head, top-left, next to the name. Clickable — home. */
+.masthead__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.masthead__head {
+  display: inline-block;
+  line-height: 0;
+  flex: none;
+}
+.masthead__head img {
+  display: block;
+  height: 44px;
+  width: auto;
+  transition: transform 0.35s ease;
+  transform-origin: 50% 85%;
+}
+/* Hover easter egg: the head tilts, listening. */
+.masthead__head:hover img,
+.masthead__head:focus-visible img {
+  transform: rotate(-8deg) scale(1.07);
+}
+
+.masthead__name {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-block;
+}
+.masthead__name:hover { color: var(--accent); }
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav a {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-decoration: none;
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* --- Page head ---------------------------------------------------------- */
+.page-head { margin: 3.5rem 0 2.5rem; }
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.9rem;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 2.125rem;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  margin: 0 0 0.75rem;
+}
+@media (min-width: 40em) { h1 { font-size: 2.5rem; } }
+
+.standfirst {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 0;
+  max-width: 34rem;
+}
+
+/* --- Sections & headings ------------------------------------------------ */
+section { margin: 0 0 3rem; }
+
+.section-label {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 3.25rem 0 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+}
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin: 2.25rem 0 0.75rem;
+}
+
+h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.1875rem;
+  line-height: 1.35;
+  margin: 2rem 0 0.4rem;
+}
+
+h4,
+.sub-label {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 1.75rem 0 0.5rem;
+}
+
+p { margin: 0 0 1.35rem; }
+
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--rule-strong);
+}
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+strong { font-weight: 600; }
+
+em { font-style: italic; }
+
+/* Small-caps-ish inline label */
+.label {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+hr.rule {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+}
+
+/* --- Lists -------------------------------------------------------------- */
+ul.prose-list, ol.prose-list {
+  margin: 0 0 1.35rem;
+  padding-left: 1.15rem;
+}
+ul.prose-list li, ol.prose-list li { margin-bottom: 0.55rem; }
+ul.prose-list li::marker { color: var(--ink-faint); }
+
+/* Names set as a plain run-in list */
+.name-list {
+  list-style: none;
+  margin: 0 0 1.35rem;
+  padding: 0;
+}
+.name-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.name-list li:first-child { border-top: 1px solid var(--rule); }
+
+/* --- Schools (and places): hairline rows, logo inline next to the name -- */
+.school-list {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+.school-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.school-list li:first-child { border-top: 1px solid var(--rule); }
+
+.school-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex: none;
+}
+
+.school-name { min-width: 0; }
+
+.school-meta {
+  margin-left: auto;
+  padding-left: 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: right;
+  flex: none;
+  max-width: 45%;
+  white-space: normal;
+}
+
+/* --- Definition-style entries (no cards, hairlines only) ---------------- */
+.entry {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--rule);
+}
+.entry:last-of-type,
+.entry--solo { border-bottom: 1px solid var(--rule); }
+.entry h3 { margin-top: 0; }
+.entry p:last-child { margin-bottom: 0; }
+
+.entry__meta {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.4rem;
+}
+
+/* --- Blockquote --------------------------------------------------------- */
+blockquote {
+  margin: 2rem 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 2px solid var(--accent);
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  font-style: italic;
+  color: var(--ink);
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+/* --- Figures / images --------------------------------------------------- */
+figure {
+  margin: 2.5rem 0;
+}
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+}
+figcaption {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  margin-top: 0.6rem;
+  max-width: 30rem;
+}
+
+/* A modest inline plate, narrower than the measure. */
+.figure--inset {
+  max-width: 22rem;
+}
+
+/* Portrait-orientation photograph, held to a calm width. */
+.figure--portrait {
+  max-width: 26rem;
+}
+
+/* --- Age counter (inline, editorial) ------------------------------------ */
+.age {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: 0.9em;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+/* --- Portrait + pixelation slider -------------------------------------- */
+.portrait {
+  margin: 2.5rem 0 1.25rem;
+  max-width: 22rem;
+}
+.portrait__stage {
+  position: relative;
+  background: var(--bg-inset);
+}
+.portrait__stage img,
+.portrait__stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* When JS is running, the canvas replaces the plain image. */
+.portrait__stage canvas { image-rendering: pixelated; }
+.portrait__controls {
+  margin-top: 0.85rem;
+}
+/* Hidden until script.js confirms canvas support — no-JS gets a plain photo. */
+.portrait__controls[hidden] { display: none; }
+
+.portrait__controls label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+
+.portrait-caption {
+  color: var(--ink-soft);
+  font-style: italic;
+  max-width: 22rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  margin: 0;
+  cursor: ew-resize;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--rule-strong);
+}
+input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--rule-strong);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  margin-top: -6px;
+  background: var(--accent);
+  border: 0;
+  border-radius: 0;      /* squares only — no rounded corners anywhere */
+}
+input[type="range"]::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  background: var(--accent);
+  border: 0;
+  border-radius: 0;
+}
+
+/* --- Quiet inset block (notes, parked ideas) ---------------------------- */
+.inset {
+  background: var(--bg-inset);
+  padding: 1.75rem;
+  margin: 2.5rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.inset > :last-child { margin-bottom: 0; }
+
+/* --- The small head on Other Stuff: spins on hover ---------------------- */
+.head-egg {
+  margin: 3rem 0 0;
+}
+.head-egg a {
+  display: inline-block;
+  line-height: 0;
+}
+.head-egg img {
+  height: 56px;
+  width: auto;
+  transition: transform 0.6s ease;
+}
+.head-egg a:hover img,
+.head-egg a:focus-visible img {
+  transform: rotate(360deg);
+}
+.head-egg .colophon { margin-top: 0.6rem; }
+
+/* --- Continue / next links --------------------------------------------- */
+.jump {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.jump li {
+  border-top: 1px solid var(--rule);
+}
+.jump li:last-child { border-bottom: 1px solid var(--rule); }
+.jump a {
+  display: block;
+  padding: 1.1rem 0;
+  text-decoration: none;
+  color: var(--ink);
+}
+.jump a:hover { color: var(--accent); }
+.jump__title {
+  font-family: var(--serif);
+  font-size: 1.125rem;
+}
+.jump__note {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  margin-top: 0.2rem;
+}
+.jump a:hover .jump__note { color: var(--ink-soft); }
+
+/* --- Call to action (text only, no buttons/cards) ---------------------- */
+.cta {
+  font-size: 1.0625rem;
+  margin: 2rem 0 0;
+}
+.cta a {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+/* --- Footer: social row with inline SVG logos --------------------------- */
+.site-footer {
+  margin: 5rem 0 0;
+  padding: 1.5rem 0 4rem;
+  border-top: 1px solid var(--rule);
+}
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+}
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-decoration: none;
+}
+.site-footer a:hover { color: var(--accent); }
+.social__icon {
+  display: block;
+  flex: none;
+}
+
+.colophon {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
+/* --- Utilities ---------------------------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Round 3 additions — new components, same editorial language.
+   Nothing above this line changed; everything below reuses the tokens.
+   ========================================================================== */
+
+/* --- Portrait carousel: arrows flanking the stage ----------------------- */
+/* Slightly wider than the old fixed portrait so the photo itself stays
+   the same size once the arrow columns are added. */
+.portrait { max-width: 26rem; }
+
+.portrait__row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.portrait__row .portrait__stage {
+  flex: 1;
+  min-width: 0;
+}
+
+.portrait__arrow {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;                /* squares only, as everywhere else */
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.portrait__arrow:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --- School logos: one wide exception (the Myers Park mustang) ---------- */
+.school-logo--wide {
+  width: 40px;
+  height: 24px;                    /* 360×215 kept in proportion */
+}
+
+/* --- Experience: a small logo beside each role title -------------------- */
+.entry__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 0.4rem;
+}
+.entry__head h3 { margin: 0; }
+
+.entry__logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex: none;
+}
+
+/* --- Paired photos inside an entry -------------------------------------- */
+.photo-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.photo-pair img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Round-6: a slightly smaller pair, for the Housecat! photo + art. */
+.photo-pair--small {
+  max-width: 26rem;
+}
+/* Round-8: three across, for the Housecat! sketch + photo + solo shot. */
+.photo-pair--trio {
+  grid-template-columns: 1fr 1fr 1fr;
+  max-width: 36rem;
+}
+
+/* --- Click-to-play videos (nothing preloads) ----------------------------- */
+.figure--video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--bg-inset);
+}
+.figure--video { max-width: 30rem; }
+.figure--video-tall { max-width: 14rem; }   /* the vertical one, held short */
+
+/* --- Music: the small band logo set into the sentence -------------------- */
+.band-logo {
+  width: 26px;
+  height: 26px;
+  object-fit: cover;
+  vertical-align: -0.45em;
+  margin-right: 0.1rem;
+}
+
+/* --- Music: tentative gallery -------------------------------------------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 0.9rem;
+  margin: 2rem 0 2.5rem;
+}
+@media (min-width: 34em) {
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+}
+.gallery figure { margin: 0; }
+.gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: var(--bg-inset);
+}
+
+/* --- Super Secret Stuff: the world map ----------------------------------- */
+.world-map { margin: 2.25rem 0 2rem; }
+
+.world-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.world-map .land {
+  fill: var(--rule);
+  fill-opacity: 1;
+  stroke: var(--bg);
+  stroke-opacity: 1;
+  stroke-width: 0.5;
+}
+
+.world-map .land--visited,
+.world-map .map-marker {
+  fill: var(--accent);
+  fill-opacity: 0.55;
+  stroke: var(--accent);
+  stroke-width: 0.6;
+}
+
+.world-map--interactive .land--visited,
+.world-map--interactive .map-marker {
+  cursor: pointer;
+}
+.world-map--interactive .land--visited:hover,
+.world-map--interactive .map-marker:hover,
+.world-map .land--visited:focus-visible,
+.world-map .map-marker:focus-visible,
+.world-map [aria-expanded="true"] {
+  fill-opacity: 1;
+}
+.world-map .land--visited:focus-visible,
+.world-map .map-marker:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.world-map .colophon { margin-top: 0.6rem; }
+
+/* One panel at a time under the map (all of them, stacked, without JS). */
+.map-panel {
+  border-top: 1px solid var(--rule);
+  padding: 1.4rem 0 0.4rem;
+  margin: 1.2rem 0 0;
+}
+.map-panel h3 { margin-top: 0; }
+.map-panel figure { margin: 1.25rem 0; }
+
+.map-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin: 1.25rem 0;
+}
+.map-photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--bg-inset);
+}
+
+/* Experience lost its "Roles" h2, so the role titles are h2s now — set to
+   the entry-title size they had as h3s, keeping the hierarchy unskipped. */
+.entry__head h2 {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* --- Travel arcs on the world map (the one keeper from variation 9) ------
+   Dashed flight lines — London to Charlotte, Boone to Accra, Boone to
+   Hong Kong — drifting slowly. Decorative only (aria-hidden). They opt out
+   of animating entirely under prefers-reduced-motion, since the global
+   0.001ms rule would leave an infinite loop churning; there they sit as
+   static dashed routes. */
+.world-map .map-arc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-dasharray: 4 7;
+  opacity: 0.5;
+  animation: arc-flow 30s linear infinite;
+}
+@keyframes arc-flow {
+  to { stroke-dashoffset: -330; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .world-map .map-arc { animation: none; }
+}
+
+/* --- Round 4: "Edits for Variation 8" (applied here, to variation 10) ----- */
+
+/* Music bio: the live photo with the story alongside it. Stacks when narrow. */
+.music-bio {
+  display: flex;
+  gap: 1.75rem;
+  align-items: flex-start;
+  margin: 2.5rem 0;
+}
+.music-bio__photo {
+  margin: 0;
+  flex: 0 1 16rem;
+  min-width: 0;
+}
+.music-bio__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.music-bio__text {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+.music-bio__text p:last-child { margin-bottom: 0; }
+@media (max-width: 38em) {
+  .music-bio { flex-direction: column; }
+  .music-bio__photo { flex-basis: auto; max-width: 20rem; }
+}
+
+/* The Altitude Sickness band photo: much smaller, and toned down —
+   the shot runs hot, so contrast/brightness/saturation are eased off. */
+.figure--band { max-width: 14rem; }
+.figure--band img {
+  filter: contrast(0.82) brightness(0.94) saturate(0.88);
+}
+
+/* "Music Lessons" gets a real title, not a whispered section label. */
+.lessons-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  margin: 3.25rem 0 0.9rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 40em) {
+  .lessons-title { font-size: 2rem; }
+}

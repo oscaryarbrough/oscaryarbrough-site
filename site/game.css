@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Oscar Yarbrough — variation 7, Other Stuff
+   Chrome for "The Rhythm Section" drum game. Same editorial rules as the
+   rest of the site: hairlines, squares, the one burnt-sienna accent.
+   All colors come from the custom properties in style.css, so dark mode
+   is inherited for free.
+   ========================================================================== */
+
+.drumgame {
+  margin: 2.25rem 0 2.5rem;
+}
+
+/* --- HUD row -------------------------------------------------------------- */
+.drumgame__hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.6rem;
+  align-items: baseline;
+  margin: 0 0 0.55rem;
+}
+
+.drumgame__stat {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.drumgame__num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.drumgame__stat--best .drumgame__num { color: var(--accent); }
+
+/* --- Groove meter: one thin bar, no chrome -------------------------------- */
+.drumgame__meter {
+  height: 3px;
+  background: var(--rule);
+  margin: 0 0 0.9rem;
+}
+.drumgame__meter-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.15s linear;
+}
+
+/* --- The stage ------------------------------------------------------------- */
+.drumgame__stage {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: var(--bg-inset);
+}
+
+.drumgame__stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* --- Overlays (menu / pause / results) ------------------------------------- */
+.drumgame__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem clamp(1.25rem, 6vw, 3rem);
+  background: var(--bg-inset);
+  overflow-y: auto;
+}
+.drumgame__overlay[hidden] { display: none; }
+
+.drumgame__ov-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.6rem;
+}
+
+.drumgame__ov-title {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 0.7rem;
+}
+
+.drumgame__ov-copy {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 27rem;
+  margin: 0 0 0.7rem;
+}
+
+.drumgame__ov-best {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  margin: 0 0 0.9rem;
+}
+
+.drumgame__ov-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+/* --- Buttons: bordered squares, uppercase sans ----------------------------- */
+.drumbtn {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;             /* squares only, as everywhere else */
+  padding: 0.65rem 1.1rem;
+  cursor: pointer;
+}
+.drumbtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.drumbtn--primary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.drumbtn--primary:hover {
+  background: var(--accent-soft);
+}
+
+/* --- Contextual bar under the stage (pause / jam controls) ----------------- */
+.drumgame__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+}
+.drumgame__bar[hidden] { display: none; }
+
+/* --- Key legend ------------------------------------------------------------- */
+.drumgame__keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.drumgame__keys span { text-align: center; }
+
+.drumgame .colophon { margin-top: 0.8rem; }
+
+/* --- Small screens ----------------------------------------------------------- */
+@media (max-width: 26em) {
+  .drumgame__hud { gap: 0.3rem 1rem; }
+  .drumgame__ov-title { font-size: 1.25rem; }
+  .drumbtn { padding: 0.55rem 0.8rem; }
+}
