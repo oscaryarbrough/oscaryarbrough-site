@@ -80,8 +80,8 @@
   // drawImage only — no getImageData/toDataURL, so file:// stays untainted.
   // clearRect before each draw keeps any alpha channel intact.
   //
-  // Round-5: back to a single photo. It starts fully pixelated (100) and
-  // the slider brings it into focus.
+  // Round-9: three photos you can flip between; the slider starts at 75
+  // and the pixelation level survives switching photos.
 
   function initPortrait() {
     const root = document.querySelector('[data-portrait]');
@@ -91,7 +91,42 @@
     const controls = root.querySelector('[data-portrait-controls]');
     const slider = root.querySelector('[data-portrait-slider]');
     const readout = root.querySelector('[data-portrait-readout]');
+    const prevBtn = root.querySelector('[data-portrait-prev]');
+    const nextBtn = root.querySelector('[data-portrait-next]');
+    const status = root.querySelector('[data-portrait-status]');
     if (!img || !controls || !slider) return;
+
+    const SOURCES = [
+      '/_shared/img/portraits/home-1.jpg',
+      '/_shared/img/portraits/home-2.jpg',
+      '/_shared/img/portraits/home-3.jpg'
+    ];
+    let index = 0;
+    let canvasActive = false;
+
+    function show(i) {
+      index = ((i % SOURCES.length) + SOURCES.length) % SOURCES.length;
+      const done = function () {
+        if (canvasActive) sizeAndDraw();
+      };
+      img.addEventListener('load', done, { once: true });
+      img.alt = 'Oscar Yarbrough — photo ' + (index + 1) + ' of ' + SOURCES.length + '.';
+      img.src = SOURCES[index];
+      if (img.complete && img.naturalWidth) {
+        img.removeEventListener('load', done);
+        done();
+      }
+      if (status) {
+        status.textContent = 'Photo ' + (index + 1) + ' of ' + SOURCES.length;
+      }
+    }
+
+    if (prevBtn && nextBtn) {
+      prevBtn.hidden = false;
+      nextBtn.hidden = false;
+      prevBtn.addEventListener('click', function () { show(index - 1); });
+      nextBtn.addEventListener('click', function () { show(index + 1); });
+    }
 
     // Bail out quietly (leaving the plain <img>) if canvas is unavailable.
     const canvas = document.createElement('canvas');
@@ -130,8 +165,9 @@
       img.setAttribute('aria-hidden', 'true');
       stage.appendChild(canvas);
       controls.hidden = false;
+      canvasActive = true;
 
-      sizeAndDraw(); // initial render honours the slider's value="100"
+      sizeAndDraw(); // initial render honours the slider's value="75"
 
       slider.addEventListener('input', function () {
         draw(Number(slider.value));

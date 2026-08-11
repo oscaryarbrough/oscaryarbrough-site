@@ -23,7 +23,6 @@
       <li><a href="experience.html">Experience</a></li>
       <li><a href="studies.html">Studies</a></li>
       <li><a href="music.html">Music</a></li>
-      <li><a href="travel.html">Travel</a></li>
     </ul>
   </nav>
 </header>
@@ -42,19 +41,27 @@
   <p>I am currently <span class="age" data-age-counter aria-live="off">22.9</span> years old.</p>
 
   <!-- ------------------------------------------------------------------ -->
-  <!-- Portrait. No-JS: a plain photo; script.js reveals the pixelation    -->
-  <!-- slider, which starts fully pixelated (100).                         -->
+  <!-- Portrait carousel: three photos. No-JS: a plain photo of the        -->
+  <!-- headshot; script.js reveals the arrows and the pixelation slider,   -->
+  <!-- which starts at 75.                                                 -->
   <div class="portrait" data-portrait>
-    <div class="portrait__stage" data-portrait-stage>
-      <img src="/_shared/img/portraits/p07.jpg"
-           alt="Oscar Yarbrough."
-           width="900" height="1200" data-portrait-img>
+    <div class="portrait__row">
+      <button type="button" class="portrait__arrow" data-portrait-prev
+              aria-label="Previous photo" hidden>&#8592;</button>
+      <div class="portrait__stage" data-portrait-stage>
+        <img src="/_shared/img/portraits/home-1.jpg"
+             alt="Oscar Yarbrough &mdash; photo 1 of 3."
+             width="960" height="1200" data-portrait-img>
+      </div>
+      <button type="button" class="portrait__arrow" data-portrait-next
+              aria-label="Next photo" hidden>&#8594;</button>
     </div>
     <div class="portrait__controls" data-portrait-controls hidden>
-      <label for="pixelate">Resolution &mdash; <span data-portrait-readout>100% pixelated</span></label>
-      <input type="range" id="pixelate" min="0" max="100" value="100" step="1"
+      <label for="pixelate">Resolution &mdash; <span data-portrait-readout>75% pixelated</span></label>
+      <input type="range" id="pixelate" min="0" max="100" value="75" step="1"
              data-portrait-slider>
     </div>
+    <p class="visually-hidden" role="status" data-portrait-status></p>
   </div>
 
   <p class="portrait-caption">Slide left if you want a clear picture.<br>
@@ -79,13 +86,7 @@
     <li>
       <a href="music.html">
         <span class="jump__title">Music</span>
-        <span class="jump__note">Altitude Sickness, the Nord Drum 3P, Logic and Ableton &mdash; and drum lessons, first one free.</span>
-      </a>
-    </li>
-    <li>
-      <a href="travel.html">
-        <span class="jump__title">Travel</span>
-        <span class="jump__note">A clickable map of the places so far &mdash; two Londons, three Carolinas&rsquo; worth of towns, Accra, Hong Kong.</span>
+        <span class="jump__note">Altitude Sickness, Logic and Ableton &mdash; and music lessons, first one free.</span>
       </a>
     </li>
   </ul>

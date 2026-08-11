@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Oscar Yarbrough — Variation 11: "Editorial"
+   Oscar Yarbrough — Variation 12: "Editorial"
    The straight evolution of variation 2 ("Constrained Editorial Column"),
    via variations 4, 7, 8, and 10.
    Typography-led. One column. No cards, no shadows, no rounded corners.
@@ -473,19 +473,35 @@ input[type="range"]::-moz-range-track {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 13px;
-  height: 13px;
-  margin-top: -6px;
+  width: 18px;
+  height: 18px;
+  margin-top: -8.5px;
   background: var(--accent);
   border: 0;
   border-radius: 0;      /* squares only — no rounded corners anywhere */
 }
 input[type="range"]::-moz-range-thumb {
-  width: 13px;
-  height: 13px;
+  width: 18px;
+  height: 18px;
   background: var(--accent);
   border: 0;
   border-radius: 0;
+}
+/* Round-9: on touch screens the thumb was too small to grab. Grow the
+   thumb and pad the input so the hit area clears 44px. */
+@media (pointer: coarse) {
+  input[type="range"] {
+    padding: 14px 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    width: 30px;
+    height: 30px;
+    margin-top: -14.5px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 /* --- Quiet inset block (notes, parked ideas) ---------------------------- */
