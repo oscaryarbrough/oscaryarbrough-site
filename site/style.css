@@ -763,10 +763,60 @@ input[type="range"]::-moz-range-thumb {
 .photo-pair--small {
   max-width: 26rem;
 }
-/* Round-8: three across, for the Housecat! sketch + photo + solo shot. */
+/* Round-8: three across, for the Housecat! sketch + photo + solo shot.
+   Round-15: centred in the column. */
 .photo-pair--trio {
   grid-template-columns: 1fr 1fr 1fr;
   max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Round-15: the Altitude Sickness four-tile — two photos up top, the
+   clip and a third photo below. Fixed cell ratios + cover keep the four
+   edges flush, one clean rectangle. */
+.photo-quad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.photo-quad img,
+.photo-quad video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.photo-quad .quad--top { aspect-ratio: 4 / 3; }
+.photo-quad .quad--bottom { aspect-ratio: 720 / 986; }
+.photo-quad video { object-position: 50% 100%; }
+
+/* Round-16: the Ghana trio — djembe clip tall on the left, the lunch and
+   family photos stacked on the right. The photos keep their natural
+   ratios and set the row heights; the clip fills the full left column
+   via cover, flexing a hair at the sides so all four edges stay flush. */
+.photo-trio {
+  display: grid;
+  grid-template-columns: 1.49fr 1fr;
+  gap: 0.75rem;
+}
+.photo-trio img {
+  object-fit: cover;
+}
+.photo-trio .trio--wide { aspect-ratio: 4 / 3; }
+.photo-trio .trio--tall { aspect-ratio: 3 / 4; }
+.trio__clip {
+  grid-row: 1 / 3;
+  position: relative;
+  min-height: 0;
+}
+.trio__clip video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--bg-inset);
 }
 
 /* --- Click-to-play videos (nothing preloads) ----------------------------- */

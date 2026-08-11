@@ -337,9 +337,10 @@
   // video keeps its native controls.
 
   function initVideoPlayer() {
-    const video = document.querySelector('[data-player]');
-    if (!video) return;
+    document.querySelectorAll('[data-player]').forEach(setupPlayer);
+  }
 
+  function setupPlayer(video) {
     const figure = video.closest('figure');
     if (!figure) return;
 
@@ -357,7 +358,10 @@
       '<input type="range" class="player__scrub" min="0" max="1000" value="0" step="1" aria-label="Seek">' +
       '<span class="player__time" aria-hidden="true">0:00 / 0:00</span>' +
       '<button type="button" class="player__btn" data-mute aria-label="Mute">' + SOUND_ICON + '</button>';
-    figure.insertBefore(bar, video.nextSibling);
+    // Inside a photo grid, the transport sits below the whole grid so the
+    // four tiles keep their clean rectangle; otherwise right under the video.
+    const anchor = video.closest('.photo-quad, .photo-trio') || video;
+    anchor.parentNode.insertBefore(bar, anchor.nextSibling);
     figure.classList.add('player--active');
 
     const playBtn = bar.querySelector('[data-play]');
