@@ -94,7 +94,16 @@
     const prevBtn = root.querySelector('[data-portrait-prev]');
     const nextBtn = root.querySelector('[data-portrait-next]');
     const status = root.querySelector('[data-portrait-status]');
-    if (!img || !controls || !slider) return;
+
+    // The stylesheet hides the raw photo when JS is on so the sharp
+    // version never flashes before pixelation. If we can't run the
+    // canvas engine after all, put the plain photo back.
+    function reveal() {
+      if (img) img.style.visibility = 'visible';
+    }
+
+    if (!img || !controls || !slider) { reveal(); return; }
+    img.addEventListener('error', reveal);
 
     const SOURCES = [
       '/_shared/img/portraits/home-1.jpg',
@@ -128,16 +137,16 @@
       nextBtn.addEventListener('click', function () { show(index + 1); });
     }
 
-    // Bail out quietly (leaving the plain <img>) if canvas is unavailable.
+    // Bail out quietly (revealing the plain <img>) if canvas is unavailable.
     const canvas = document.createElement('canvas');
-    if (!canvas.getContext) return;
+    if (!canvas.getContext) { reveal(); return; }
     const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!ctx) { reveal(); return; }
 
     // Offscreen buffer we downsample into before scaling back up.
     const buffer = document.createElement('canvas');
     const bufferCtx = buffer.getContext('2d');
-    if (!bufferCtx) return;
+    if (!bufferCtx) { reveal(); return; }
 
     canvas.className = 'portrait__canvas';
 
@@ -145,7 +154,7 @@
     function sizeAndDraw() {
       const w = img.naturalWidth;
       const h = img.naturalHeight;
-      if (!w || !h) return; // decoding failed — keep the <img> as-is
+      if (!w || !h) { reveal(); return; } // decoding failed — show the <img>
 
       // Cap the working resolution; the portrait is displayed small.
       const maxW = 720;
@@ -320,12 +329,107 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* 5. The djembe clip's transport                                      */
+  /* ------------------------------------------------------------------ */
+  // Replaces the browser chrome with controls in the site's own language:
+  // a square play button, a hairline scrubber (the same range styling as
+  // the pixelation slider), and a mono time readout. With JS off, the
+  // video keeps its native controls.
+
+  function initVideoPlayer() {
+    const video = document.querySelector('[data-player]');
+    if (!video) return;
+
+    const figure = video.closest('figure');
+    if (!figure) return;
+
+    video.removeAttribute('controls');
+
+    const PLAY_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6 3.8l14 8.2-14 8.2z"/></svg>';
+    const PAUSE_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true" focusable="false"><rect x="5" y="4" width="4.6" height="16"/><rect x="14.4" y="4" width="4.6" height="16"/></svg>';
+    const SOUND_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5z" fill="currentColor" stroke="none"/><path d="M16 9c1 1 1 5 0 6M18.5 7c2 2 2 8 0 10" stroke-linecap="round"/></svg>';
+    const MUTED_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9.5v5h3.5L13 19V5L7.5 9.5z" fill="currentColor" stroke="none"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke-linecap="round"/></svg>';
+
+    const bar = document.createElement('div');
+    bar.className = 'player';
+    bar.innerHTML =
+      '<button type="button" class="player__btn" data-play aria-label="Play">' + PLAY_ICON + '</button>' +
+      '<input type="range" class="player__scrub" min="0" max="1000" value="0" step="1" aria-label="Seek">' +
+      '<span class="player__time" aria-hidden="true">0:00 / 0:00</span>' +
+      '<button type="button" class="player__btn" data-mute aria-label="Mute">' + SOUND_ICON + '</button>';
+    figure.insertBefore(bar, video.nextSibling);
+    figure.classList.add('player--active');
+
+    const playBtn = bar.querySelector('[data-play]');
+    const muteBtn = bar.querySelector('[data-mute]');
+    const scrub = bar.querySelector('.player__scrub');
+    const time = bar.querySelector('.player__time');
+
+    function fmt(t) {
+      if (!isFinite(t)) t = 0;
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60);
+      return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function refreshTime() {
+      time.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
+    }
+
+    function toggle() {
+      if (video.paused || video.ended) video.play();
+      else video.pause();
+    }
+
+    playBtn.addEventListener('click', toggle);
+    video.addEventListener('click', toggle);
+
+    video.addEventListener('play', function () {
+      playBtn.innerHTML = PAUSE_ICON;
+      playBtn.setAttribute('aria-label', 'Pause');
+    });
+    video.addEventListener('pause', function () {
+      playBtn.innerHTML = PLAY_ICON;
+      playBtn.setAttribute('aria-label', 'Play');
+    });
+    video.addEventListener('ended', function () {
+      playBtn.innerHTML = PLAY_ICON;
+      playBtn.setAttribute('aria-label', 'Play');
+    });
+
+    video.addEventListener('loadedmetadata', refreshTime);
+    video.addEventListener('timeupdate', function () {
+      if (video.duration) {
+        scrub.value = String(Math.round(video.currentTime / video.duration * 1000));
+      }
+      refreshTime();
+    });
+
+    scrub.addEventListener('input', function () {
+      if (video.duration) {
+        video.currentTime = Number(scrub.value) / 1000 * video.duration;
+      }
+    });
+
+    muteBtn.addEventListener('click', function () {
+      video.muted = !video.muted;
+    });
+    video.addEventListener('volumechange', function () {
+      muteBtn.innerHTML = video.muted ? MUTED_ICON : SOUND_ICON;
+      muteBtn.setAttribute('aria-label', video.muted ? 'Unmute' : 'Mute');
+    });
+
+    refreshTime();
+  }
+
+  /* ------------------------------------------------------------------ */
 
   function init() {
     initAgeCounter();
     initPortrait();
     initWorldMap();
     initHeadAnims();
+    initVideoPlayer();
   }
 
   if (document.readyState === 'loading') {

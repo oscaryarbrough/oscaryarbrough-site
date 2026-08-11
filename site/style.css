@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Oscar Yarbrough — Variation 12: "Editorial"
+   Oscar Yarbrough — Variation 13: "Editorial"
    The straight evolution of variation 2 ("Constrained Editorial Column"),
    via variations 4, 7, 8, and 10.
    Typography-led. One column. No cards, no shadows, no rounded corners.
@@ -472,6 +472,11 @@ figcaption {
 }
 /* When JS is running, the canvas replaces the plain image. */
 .portrait__stage canvas { image-rendering: pixelated; }
+
+/* Round-11: never flash the sharp photo. When JS is on, the plain <img>
+   stays invisible (still holding its layout box) until the canvas draws
+   it pixelated; script.js reveals it again if canvas is unavailable. */
+.js .portrait [data-portrait-img] { visibility: hidden; }
 .portrait__controls {
   margin-top: 0.85rem;
 }
@@ -679,9 +684,24 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   gap: 0.6rem;
 }
+/* Round-12: the three photos have different shapes, so the stage keeps
+   one fixed box (the tallest photo's ratio) and letterboxes the rest —
+   the arrows and everything below stay put when you flip. */
 .portrait__row .portrait__stage {
   flex: 1;
   min-width: 0;
+  aspect-ratio: 804 / 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;  /* letterbox bars vanish into the page */
+}
+.portrait__row .portrait__stage img,
+.portrait__row .portrait__stage canvas {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .portrait__arrow {
@@ -758,6 +778,79 @@ input[type="range"]::-moz-range-thumb {
 }
 .figure--video { max-width: 30rem; }
 .figure--video-tall { max-width: 14rem; }   /* the vertical one, held short */
+/* Round-11: the djembe clip — portrait, so keep the column narrow. */
+.figure--video--portrait { max-width: 21rem; }
+
+/* Round-12: job and school logos grow a little under the cursor. */
+.entry__logo,
+.school-logo {
+  transition: transform 0.25s ease;
+}
+.entry__logo:hover,
+.school-logo:hover {
+  transform: scale(1.35);
+}
+
+/* Round-12: role titles and school names link to each place's homepage,
+   with the same quiet color-change the masthead name uses. */
+.org-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.org-link:hover,
+.org-link:focus-visible {
+  color: var(--accent);
+}
+
+/* Round-13: logos are links now; the wrapper stays invisible in the row. */
+.logo-link {
+  flex: none;
+  display: inline-flex;
+  line-height: 0;
+}
+
+/* Round-13: the djembe clip's own transport — same hairline-and-square
+   language as the pixelation slider. With JS off, native controls stay. */
+.player {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.6rem;
+  font-family: var(--sans);
+}
+.player__btn {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  color: var(--ink);
+  cursor: pointer;
+}
+.player__btn:hover,
+.player__btn:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.player__btn svg { display: block; }
+.player__scrub { flex: 1; min-width: 0; }
+.player__time {
+  flex: none;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+.player--active video,
+[data-player] { cursor: pointer; }
 
 /* --- Music: the small band logo set into the sentence -------------------- */
 .band-logo {
