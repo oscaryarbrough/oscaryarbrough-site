@@ -6,11 +6,12 @@ app = Flask(__name__, static_folder=None)
 
 SITE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site")
 
-PAGES = {"index", "experience", "studies", "music", "travel", "other"}
+PAGES = {"index", "experience", "studies", "music", "other"}
 
 # Old-site URLs that may still be linked or bookmarked elsewhere.
 LEGACY = {
     "lessons": "/music.html#lessons",
+    "travel": "/other.html",
     "housecat": "/music.html",
     "altitude-sickness": "/music.html",
 }
@@ -23,6 +24,8 @@ def home():
 
 @app.route("/<name>.html")
 def page(name):
+    if name == "travel":
+        return redirect("/other.html", code=301)
     if name not in PAGES:
         return send_from_directory(SITE, "index.html"), 404
     return send_from_directory(SITE, f"{name}.html")

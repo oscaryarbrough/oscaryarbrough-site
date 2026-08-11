@@ -80,7 +80,7 @@
   // drawImage only — no getImageData/toDataURL, so file:// stays untainted.
   // clearRect before each draw keeps any alpha channel intact.
   //
-  // Round-9: three photos you can flip between; the slider starts at 75
+  // Round-10: three photos you can flip between; the slider starts at 85
   // and the pixelation level survives switching photos.
 
   function initPortrait() {
@@ -167,7 +167,7 @@
       controls.hidden = false;
       canvasActive = true;
 
-      sizeAndDraw(); // initial render honours the slider's value="75"
+      sizeAndDraw(); // initial render honours the slider's value="85"
 
       slider.addEventListener('input', function () {
         draw(Number(slider.value));
@@ -275,11 +275,57 @@
   }
 
   /* ------------------------------------------------------------------ */
+  /* 4. The head — five moods, picked at random on hover                 */
+  /* ------------------------------------------------------------------ */
+  // With JS off, CSS keeps the old tilt. With JS on, each hover (or
+  // keyboard focus) plays one of five animations — never the same one
+  // twice in a row. One of them is a blink.
+
+  function initHeadAnims() {
+    const link = document.querySelector('.masthead__head');
+    if (!link) return;
+    const img = link.querySelector('img');
+    if (!img) return;
+
+    link.classList.add('head--js');
+
+    const ANIMS = [
+      'head-anim--tilt',
+      'head-anim--nod',
+      'head-anim--shake',
+      'head-anim--bounce',
+      'head-anim--blink'
+    ];
+    let last = -1;
+    let playing = false;
+
+    function play() {
+      if (playing) return;
+      let i;
+      do {
+        i = Math.floor(Math.random() * ANIMS.length);
+      } while (i === last);
+      last = i;
+      playing = true;
+      const cls = ANIMS[i];
+      img.classList.add(cls);
+      img.addEventListener('animationend', function () {
+        img.classList.remove(cls);
+        playing = false;
+      }, { once: true });
+    }
+
+    link.addEventListener('mouseenter', play);
+    link.addEventListener('focus', play);
+  }
+
+  /* ------------------------------------------------------------------ */
 
   function init() {
     initAgeCounter();
     initPortrait();
     initWorldMap();
+    initHeadAnims();
   }
 
   if (document.readyState === 'loading') {

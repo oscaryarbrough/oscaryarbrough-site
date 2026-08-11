@@ -135,10 +135,49 @@ summary:focus-visible {
   transition: transform 0.35s ease;
   transform-origin: 50% 85%;
 }
-/* Hover easter egg: the head tilts, listening. */
-.masthead__head:hover img,
-.masthead__head:focus-visible img {
+/* Hover easter egg, no-JS fallback: the head tilts, listening. */
+.masthead__head:not(.head--js):hover img,
+.masthead__head:not(.head--js):focus-visible img {
   transform: rotate(-8deg) scale(1.07);
+}
+
+/* Round-10: with JS, each hover plays one of five moods at random. */
+.head-anim--tilt   { animation: head-tilt 0.6s ease; }
+.head-anim--nod    { animation: head-nod 0.55s ease; }
+.head-anim--shake  { animation: head-shake 0.5s ease; }
+.head-anim--bounce { animation: head-bounce 0.55s ease; }
+.head-anim--blink  { animation: head-blink 0.3s ease-in-out; transform-origin: 50% 45%; }
+
+@keyframes head-tilt {
+  0%   { transform: none; }
+  40%  { transform: rotate(-10deg) scale(1.08); }
+  100% { transform: none; }
+}
+@keyframes head-nod {
+  0%   { transform: none; }
+  30%  { transform: translateY(4px) rotate(3deg); }
+  62%  { transform: translateY(-2px) rotate(-1deg); }
+  100% { transform: none; }
+}
+@keyframes head-shake {
+  0%   { transform: none; }
+  25%  { transform: rotate(7deg); }
+  50%  { transform: rotate(-6deg); }
+  75%  { transform: rotate(4deg); }
+  100% { transform: none; }
+}
+@keyframes head-bounce {
+  0%   { transform: none; }
+  35%  { transform: translateY(-7px) scaleY(1.05); }
+  70%  { transform: translateY(1px) scaleY(0.95); }
+  100% { transform: none; }
+}
+/* The blink: a quick vertical squeeze, like closing both eyes at once. */
+@keyframes head-blink {
+  0%   { transform: scaleY(1); }
+  45%  { transform: scaleY(0.08); }
+  55%  { transform: scaleY(0.08); }
+  100% { transform: scaleY(1); }
 }
 
 .masthead__name {
@@ -348,7 +387,8 @@ ul.prose-list li::marker { color: var(--ink-faint); }
   padding: 1.5rem 0;
   border-top: 1px solid var(--rule);
 }
-.entry:last-of-type,
+/* Round-10: no border under the last entry — the next section label
+   draws its own top rule, and the pair read as one stray double bar. */
 .entry--solo { border-bottom: 1px solid var(--rule); }
 .entry h3 { margin-top: 0; }
 .entry p:last-child { margin-bottom: 0; }
