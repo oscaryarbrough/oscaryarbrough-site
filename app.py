@@ -53,7 +53,10 @@ def bare(name):
 
 @app.route("/_shared/<path:asset>")
 def shared(asset):
-    return send_from_directory(os.path.join(SITE, "_shared"), asset)
+    # A week of caching lets browsers and Cloudflare's edge hold the photos,
+    # posters, and clips instead of re-pulling them from this dyno each visit.
+    return send_from_directory(
+        os.path.join(SITE, "_shared"), asset, max_age=604800)
 
 
 if __name__ == "__main__":
